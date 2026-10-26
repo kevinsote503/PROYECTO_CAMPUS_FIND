@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* Modern Web Guidance: validate-input-after-interaction (:user-invalid / :user-valid) */
+.cf-input:user-invalid,
+.cf-input.user-invalid-fallback {
+  border-color: #d93025 !important;
+  background-color: #fce8e6 !important;
+}
+
+.cf-input:user-valid,
+.cf-input.user-valid-fallback {
+  border-color: #188038 !important;
+}
+
+.cf-field-error {
+  display: none;
+  color: #d93025;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.cf-input:user-invalid + .cf-field-error,
+.cf-input.user-invalid-fallback + .cf-field-error {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}

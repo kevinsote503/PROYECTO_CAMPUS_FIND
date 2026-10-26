@@ -1,0 +1,6 @@
+{
+  "name": "Campus Find",
+  "description": "Plataforma universitaria para la gestión, reporte y recuperación de objetos perdidos y encontrados.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

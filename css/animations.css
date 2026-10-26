@@ -1,0 +1,55 @@
+/**
+ * @file animations.css
+ * @description Microinteracciones, animaciones de entrada y pulsos de geolocalización de Campus Find.
+ */
+
+@keyframes cfFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cfModalZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cfPing {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-page-enter {
+  animation: cfFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-modal-enter {
+  animation: cfModalZoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-ping-slow {
+  animation: cfPing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.card-hover-effect {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-2px);
+}

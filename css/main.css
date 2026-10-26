@@ -1,0 +1,44 @@
+/**
+ * @file main.css
+ * @description Estilos globales institucionales de Campus Find (Tipografía Plus Jakarta Sans, Scrollbars y Mapas).
+ */
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Ocultar barra de scroll horizontal en chips de categorías */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Ajustes para contenedores de mapas Leaflet en Usulután */
+.leaflet-container {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  z-index: 10;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 16px !important;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18) !important;
+  border: 1px solid #e2e8f0;
+}
+
+/* Modales nativos <dialog> centrados con backdrop blur idéntico al diseño original */
+dialog.cf-dialog {
+  margin: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+dialog.cf-dialog::backdrop {
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+}

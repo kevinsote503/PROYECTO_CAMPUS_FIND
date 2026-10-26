@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mapa GPS de Objetos en Usulután - Campus Find</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="../../css/tailwind-compiled.css" />
+    <link rel="stylesheet" href="../../css/animations.css" />
+    <link rel="stylesheet" href="../../css/main.css" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-slate-100/70 text-slate-800 font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
+    <header id="app-navbar"></header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 animate-page-enter">
+      <div class="space-y-6 pb-16">
+        <!-- Encabezado de Geolocalización de Usulután -->
+        <div class="bg-gradient-to-b from-blue-900 via-blue-800 to-blue-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div class="space-y-2">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-700/60 border border-blue-400/30 text-blue-200 text-xs font-semibold">
+                <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
+                <span>Geolocalización GPS en Tiempo Real • Usulután, El Salvador</span>
+              </div>
+              <h1 class="text-2xl sm:text-3xl font-black tracking-tight">
+                Mapa Interactivo de Objetos en Usulután
+              </h1>
+              <p class="text-xs sm:text-sm text-blue-100/90 max-w-2xl">
+                Explora visualmente dónde se perdieron o encontraron pertenencias dentro del Campus Universitario de Usulután y zonas aledañas de la ciudad.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2.5">
+              <button
+                id="btn-activar-gps"
+                type="button"
+                class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-lg transition-all hover:scale-[1.02] cursor-pointer"
+              >
+                <i data-lucide="crosshair" class="w-4 h-4"></i>
+                <span>Mi Ubicación GPS Actual</span>
+              </button>
+
+              <button
+                id="btn-fly-campus"
+                type="button"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs border border-white/20 transition-colors cursor-pointer"
+              >
+                <i data-lucide="school" class="w-4 h-4"></i>
+                <span>Campus Usulután</span>
+              </button>
+
+              <button
+                id="btn-fly-centro"
+                type="button"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs border border-white/20 transition-colors cursor-pointer"
+              >
+                <i data-lucide="building" class="w-4 h-4"></i>
+                <span>Centro Usulután</span>
+              </button>
+
+              <button
+                id="btn-fly-general"
+                type="button"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs border border-white/20 transition-colors cursor-pointer"
+              >
+                <i data-lucide="compass" class="w-4 h-4"></i>
+                <span>Vista General</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="gps-status-banner" style="display:none" class="mt-4 p-3 rounded-xl bg-blue-950/80 border border-blue-400/30 text-blue-100 text-xs flex items-center justify-between gap-3"></div>
+        </div>
+
+        <!-- Barra de Filtros del Mapa -->
+        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="relative">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+              <input
+                id="map-input-texto"
+                type="text"
+                placeholder="Buscar en el mapa de Usulután..."
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-blue-700 text-xs sm:text-sm outline-none"
+              />
+            </div>
+
+            <select id="map-select-estado" class="text-xs sm:text-sm p-2.5 rounded-xl border border-slate-300 bg-white outline-none">
+              <option value="todos">Todos los Estados</option>
+              <option value="1">🔴 Solo Perdidos (En búsqueda)</option>
+              <option value="2">🟢 Solo Encontrados (En custodia)</option>
+              <option value="3">🔵 Solo Recuperados (Devueltos)</option>
+            </select>
+
+            <select id="map-select-categoria" class="text-xs sm:text-sm p-2.5 rounded-xl border border-slate-300 bg-white outline-none">
+              <option value="todas">Todas las Categorías</option>
+            </select>
+
+            <select id="map-select-ubicacion" class="text-xs sm:text-sm p-2.5 rounded-xl border border-slate-300 bg-white outline-none">
+              <option value="todas">Todas las Zonas de Usulután</option>
+            </select>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 text-xs">
+            <div class="flex flex-wrap items-center gap-3">
+              <span id="badge-count-perdidos" class="inline-flex items-center gap-1.5 font-bold text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-200">
+                Perdidos: 0
+              </span>
+              <span id="badge-count-encontrados" class="inline-flex items-center gap-1.5 font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                Encontrados: 0
+              </span>
+              <span id="badge-count-recuperados" class="inline-flex items-center gap-1.5 font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                Recuperados: 0
+              </span>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="btn-toggle-edificios" type="button" class="px-3 py-1.5 rounded-xl font-semibold border border-slate-200 bg-slate-800 text-white text-xs cursor-pointer">
+                🏫 Ocultar/Mostrar Edificios
+              </button>
+              <button id="btn-toggle-satelite" type="button" class="px-3 py-1.5 rounded-xl font-semibold border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 text-xs cursor-pointer">
+                🛰️ Vista Satelital / Calles
+              </button>
+              <button id="btn-reset-mapa" type="button" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl font-semibold border border-slate-200 hover:bg-slate-100 text-slate-600 text-xs cursor-pointer">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                <span>Limpiar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenedor Principal: Mapa + Lista Lateral -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden flex flex-col">
+            <div id="usulutan-main-map" class="w-full h-[520px] sm:h-[580px] z-10"></div>
+            <div class="px-4 py-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+              <span>💡 Haz clic en cualquier pin sobre el mapa de Usulután para ver detalles o iniciar reclamación.</span>
+              <span class="font-mono text-slate-600">Usulután, El Salvador (13.3466° N, 88.4208° O)</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-3xl border border-slate-200 shadow-xs flex flex-col h-[560px] sm:h-[625px]">
+            <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+              <div>
+                <h2 id="map-sidebar-count" class="font-extrabold text-sm sm:text-base text-slate-900">
+                  Objetos en el Mapa (0)
+                </h2>
+                <p class="text-[11px] text-slate-500">Selecciona un objeto para volar a su coordenada GPS</p>
+              </div>
+              <a
+                href="../reportar/index.html"
+                class="px-3 py-1.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs transition-colors no-underline"
+              >
+                + Reportar
+              </a>
+            </div>
+
+            <div id="map-sidebar-items" class="flex-1 overflow-y-auto p-3 space-y-2.5"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer id="app-footer"></footer>
+
+    <script>
+      window.CAMPUS_BASE_PATH = '../..';
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../../js/services/api.js"></script>
+    <script src="../../js/components/layout.js"></script>
+    <script src="../../js/pages/mapa.js"></script>
+  </body>
+</html>
