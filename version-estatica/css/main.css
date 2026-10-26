@@ -20,6 +20,32 @@ body {
 .leaflet-container {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   z-index: 10;
+  width: 100% !important;
+}
+
+#usulutan-main-map,
+.usulutan-map-box {
+  width: 100% !important;
+  height: 560px !important;
+  min-height: 500px !important;
+  position: relative !important;
+  display: block !important;
+}
+
+#reportar-map {
+  width: 100% !important;
+  height: 320px !important;
+  min-height: 300px !important;
+  position: relative !important;
+  display: block !important;
+}
+
+#detail-modal-map {
+  width: 100% !important;
+  height: 180px !important;
+  min-height: 180px !important;
+  position: relative !important;
+  display: block !important;
 }
 
 .leaflet-popup-content-wrapper {

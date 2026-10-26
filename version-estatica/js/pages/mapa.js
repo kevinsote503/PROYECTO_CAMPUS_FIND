@@ -239,6 +239,10 @@
       zoom: 15,
     });
 
+    setTimeout(() => {
+      if (map) map.invalidateSize();
+    }, 250);
+
     tileLayer = window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors | Campus Find Usulután',
       maxZoom: 19,

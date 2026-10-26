@@ -176,4 +176,13 @@
       esquema: () => request('/stats/esquema'),
     },
   };
+
+  window.CampusFindGeo = {
+    CENTRO_CAMPUS_USULUTAN: [13.3466, -88.4208],
+    CENTRO_CIUDAD_USULUTAN: [13.3444, -88.4385],
+    VISTA_GENERAL_USULUTAN: [13.3458, -88.4285],
+    USULUTAN_COORDS_FALLBACK,
+    obtenerCoordenadasObjeto,
+    calcularDistanciaKm,
+  };
 })(window);
